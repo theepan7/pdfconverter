@@ -1,3 +1,10 @@
+const fs = require('fs');
+const path = require('path');
+
+const outputDir = path.join(__dirname, '../output');
+if (!fs.existsSync(outputDir)) {
+  fs.mkdirSync(outputDir, { recursive: true });
+}
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const path = require('path');
