@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Image to PDF Converter</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; background: #f0f0f0; }
+    form { background: #fff; padding: 20px; border-radius: 8px; }
+    input, button { font-size: 16px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h2>Convert Image to PDF</h2>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".jpg,.jpeg,.png" required />
+    <button type="submit">Convert</button>
+  </form>
+  <p id="result"></p>
+
+  <script>
+    document.getElementById('uploadForm').onsubmit = async (e) => {
+      e.preventDefault();
+      document.getElementById('result').textContent = 'Converting... please wait.';
+      const formData = new FormData(e.target);
+      const res = await fetch('/convert', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById('result').innerHTML =
+        `<a href="\${data.link}" target="_blank">Download PDF</a>`;
+    };
+  </script>
+</body>
+</html>
